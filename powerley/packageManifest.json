@@ -1,0 +1,26 @@
+{
+  "packageName": "Hubitat Powerley",
+  "author": "Ben Castellucci",
+  "version": "0.1",
+  "minimumHEVersion": "0.0",
+  "licenseFile": "https://raw.githubusercontent.com/bcastellucci/hubitat/main/LICENSE",
+  "documentationLink": "https://raw.githubusercontent.com/bcastellucci/hubitat/main/powerley/README.md",
+  "communityLink": "https://community.hubitat.com/t/release-powerley-thermostat-and-energy-bridge-driver/38305",
+  "dateReleased": "2020-10-26",
+  "drivers": [
+    {
+      "id": "d470c35c-86b3-455d-b524-f3aedcfdc38b",
+      "name": "Powerley Thermostat",
+      "namespace": "bchubitat",
+      "location": "https://raw.githubusercontent.com/bcastellucci/hubitat/main/powerley/drivers/Powerley-Thermostat.groovy",
+      "required": false
+    },
+    {
+      "id": "ed2ab1f4-6707-4634-b769-d28727c28e31",
+      "name": "Powerley Energy Monitor",
+      "namespace": "bchubitat",
+      "location": "https://raw.githubusercontent.com/bcastellucci/hubitat/main/powerley/drivers/Powerley-Energy-Monitor.groovy",
+      "required": false
+    }
+  ]
+}
