@@ -1,0 +1,18 @@
+{
+  "author": "Ben Castellucci",
+  "gitHubUrl": "https://github.com/bcastellucci/hubitat",
+  "packages": [
+    {
+      "id": "3185fd0e-d5a4-4e94-b178-f57eb95752f7",
+      "name": "Hubitat Powerley",
+      "category": "Integrations",
+      "location": "https://raw.githubusercontent.com/bcastellucci/hubitat/main/powerley/packageManifest.json",
+      "description": "Drivers for Powerley devices",
+      "tags": [
+        "Climate Control",
+        "Energy Monitoring",
+        "ZWave"
+      ]
+    }
+  ]
+}
