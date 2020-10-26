@@ -13,9 +13,27 @@ import groovy.transform.Field
  * This driver is based off of the excellent work of Bryan Copeland, specifically his
  * 'Advanced Honeywell T6 Pro' thermostat driver:
  * 
- * 	https://github.com/djdizzyd/hubitat/tree/master/Drivers/Honeywell
+ * 	https://github.com/djdizzyd/hubitat/blob/master/Drivers/Honeywell/Advanced-Honeywell-T6-Pro.groovy
  * 
  * Many thanks to Brian for all of his hard work.
+ * 
+ * ---
+ * 
+ * Copyright 2020 Ben Castellucci
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ * 
+ * ---
  * 
  */
 
@@ -25,7 +43,7 @@ metadata {
 		namespace: "bchubitat",
 		author: "Ben Castellucci",
 		description: "Driver for the Powerley Thermostat",
-		importUrl: "https://raw.githubusercontent.com/bcastellucci/Hubitat/master/Drivers/Powerley-Thermostat.groovy"
+		importUrl: "https://raw.githubusercontent.com/bcastellucci/hubitat/main/powerley/drivers/Powerley-Thermostat.groovy"
 	) {
 
 		capability "Actuator"

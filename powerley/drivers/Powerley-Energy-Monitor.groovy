@@ -7,7 +7,7 @@ import groovy.json.JsonSlurper
  * This driver is based off of the excellent work of Chris Lawson, specifically his
  * 'MQTT Link Driver' driver:
  *
- * 	https://github.com/mydevbox/hubitat-mqtt-link/tree/master/drivers
+ * https://github.com/mydevbox/hubitat-mqtt-link/tree/master/drivers/hubitat-mqtt-link-driver.groovy
  * 
  * It is also based on the great sleuthing work found in this thread:
  * 
@@ -18,6 +18,24 @@ import groovy.json.JsonSlurper
  * 	https://www.reddit.com/r/homeassistant/comments/j7ykh6/for_any_aep_ohio_customers_with_the_powerley/
  *
  * Many thanks to Chris and to the posters in the threads for all of their hard work.
+ * 
+ * ---
+ * 
+ * Copyright 2020 Ben Castellucci
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ * 
+ * ---
  *
  */
 
@@ -32,7 +50,7 @@ metadata {
 		namespace: "bchubitat",
 		author: "Ben Castellucci",
 		description: "Driver to consume energy usage from the Powerley Energy Bridge & smart meter over MQTT & present to Hubitat as an energy monitor device",
-		importUrl: "https://raw.githubusercontent.com/bcastellucci/Hubitat/master/Drivers/Powerley-Energy-Monitor.groovy"
+		importUrl: "https://raw.githubusercontent.com/bcastellucci/hubitat/main/powerley/drivers/Powerley-Energy-Monitor.groovy"
 	) {
 		
 		capability "EnergyMeter"
