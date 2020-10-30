@@ -2,10 +2,10 @@
   "packageName": "Hubitat Powerley",
   "author": "Ben Castellucci",
   "version": "1.0",
-  "minimumHEVersion": "2.2.3",
+  "minimumHEVersion": "0.0",
   "licenseFile": "https://raw.githubusercontent.com/bcastellucci/hubitat/main/LICENSE",
-  "documentationLink": "https://raw.githubusercontent.com/bcastellucci/hubitat/main/powerley/README.md",
-  "communityLink": "https://community.hubitat.com/t/release-powerley-thermostat-and-energy-bridge-driver/38305",
+  "documentationLink": "https://github.com/bcastellucci/hubitat/blob/main/powerley/README.md",
+  "communityLink": "https://community.hubitat.com/t/release-powerley-thermostat-and-energy-bridge-driver/54248",
   "dateReleased": "2020-10-26",
   "drivers": [
     {
