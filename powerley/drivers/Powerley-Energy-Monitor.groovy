@@ -2,7 +2,7 @@ import groovy.json.JsonSlurper
 
 /**
  * Powerley Energy Monitor
- * v1.0
+ * v1.1
  *
  * This driver is based off of the excellent work of Chris Lawson, specifically his
  * 'MQTT Link Driver' driver:
@@ -159,7 +159,7 @@ void connect() {
 			
 			log.info("connect() - Connected to Powerley Energy Bridge")
 			
-			sendEvent (name: "connectionState", value: "connected", isStateChange: true)
+			sendEvent (name: "connectionState", descriptionText: "connection state", value: "connected", isStateChange: true)
 			
 			schedule("0 */5 * ? * *", "testConnected")
 			
@@ -186,7 +186,7 @@ void disconnect() {
 			
 			log.info("disconnect() - Disconnected from Powerley Energy Bridge")
 			
-			sendEvent (name: "connectionState", value: "disconnected", isStateChange: true)
+			sendEvent (name: "connectionState", descriptionText: "connection state", value: "disconnected", isStateChange: true)
 			
 			unschedule("testConnected")
 			
@@ -210,7 +210,7 @@ void energyStart() {
 			
 			log.info("energyStart() - Subscribed to ${mqttTopicMeteringMiniuteSummation()}")
 			
-			sendEvent (name: "energyState", value: "started", isStateChange: true)
+			sendEvent (name: "energyState", descriptionText: "energy state", value: "started", isStateChange: true)
 			
 		} else {
 			if (debugEnabled) log.debug "energyStart() - not connected, skipping"
@@ -232,7 +232,7 @@ void energyStop() {
 			
 			log.info("energyStop() - Un-subscribed from ${mqttTopicMeteringMiniuteSummation()}")
 			
-			sendEvent (name: "energyState", value: "stopped", isStateChange: true)
+			sendEvent (name: "energyState", descriptionText: "energy state", value: "stopped", isStateChange: true)
 			
 		} else {
 			if (debugEnabled) log.debug "energyStop() - not connected, skipping"
@@ -259,7 +259,7 @@ void powerStart() {
 			
 			log.info("powerStart() - Subscribed to ${mqttTopicMeteringInstantaneousDemand()}")
 			
-			sendEvent (name: "powerState", value: "started", isStateChange: true)
+			sendEvent (name: "powerState", descriptionText: "power state", value: "started", isStateChange: true)
 			
 		} else {
 			if (debugEnabled) log.debug "powerStart() - not connected, skipping"
@@ -281,7 +281,7 @@ void powerStop() {
 			
 			log.info("powerStop() - Un-subscribed from ${mqttTopicMeteringInstantaneousDemand()}")
 			
-			sendEvent (name: "powerState", value: "stopped", isStateChange: true)
+			sendEvent (name: "powerState", descriptionText: "power state", value: "stopped", isStateChange: true)
 			
 		} else {
 			if (debugEnabled) log.debug "powerStop() - not connected, skipping"
@@ -311,21 +311,21 @@ def parse(String event) {
 		switch (message.topic) {
 			case mqttTopicMeteringInstantaneousDemand():
 				if (traceEnabled) log.trace "parse() - received instantaneous demand message with payload ${message.payload} (${new Date(Long.valueOf(parsedMessage.time)).toString()})"
-				sendEvent (name: "power", value: parsedMessage.demand, isStateChange: true)
-				sendEvent (name: "lastPowerTime", value: parsedMessage.time, isStateChange: true)
-				sendEvent (name: "lastPowerValue", value: parsedMessage.demand, isStateChange: true)
+				sendEvent (name: "power", descriptionText: "power value", value: parsedMessage.demand, isStateChange: true)
+				sendEvent (name: "lastPowerTime", descriptionText: "last power time", value: parsedMessage.time, isStateChange: true)
+				sendEvent (name: "lastPowerValue", descriptionText: "last power value", value: parsedMessage.demand, isStateChange: true)
 				break;
 			case mqttTopicMeteringMiniuteSummation():
 				if (traceEnabled) log.trace "parse() - received minute-level summation message with payload ${message.payload} (${new Date(Long.valueOf(parsedMessage.time)).toString()})"
-				sendEvent (name: "energy", value: parsedMessage.value, isStateChange: true)
-				sendEvent (name: "lastEnergyTime", value: parsedMessage.time, isStateChange: true)
-				sendEvent (name: "lastEnergyValue", value: parsedMessage.value, isStateChange: true)
+				sendEvent (name: "energy", descriptionText: "energy value", value: parsedMessage.value, isStateChange: true)
+				sendEvent (name: "lastEnergyTime", descriptionText: "last energy time", value: parsedMessage.time, isStateChange: true)
+				sendEvent (name: "lastEnergyValue", descriptionText: "last energy value", value: parsedMessage.value, isStateChange: true)
 				if (
 					device.currentValue("lastPowerTime") + 10000 < parsedMessage.time
 					&& device.currentValue("powerState") != "stopped"
 				) {
 					if (debugEnabled) log.debug "parse() - instantaneous demand seems to have stopped"
-					sendEvent (name: "powerState", value: "stopped", isStateChange: true)
+					sendEvent (name: "powerState", descriptionText: "power state", value: "stopped", isStateChange: true)
 				}
 				break;
 			default:
@@ -372,15 +372,15 @@ def testConnected() {
 			log.info("testConnected() - Not connected to Powerley Energy Bridge")
 			
 			if (device.currentValue("energyState") != 'stopped') {
-				sendEvent (name: "energyState", value: "stopped", isStateChange: true)
+				sendEvent (name: "energyState", descriptionText: "energy state", value: "stopped", isStateChange: true)
 			}
 			
 			if (device.currentValue("powerState") != 'stopped') {
-				sendEvent (name: "powerState", value: "stopped", isStateChange: true)
+				sendEvent (name: "powerState", descriptionText: "power state", value: "stopped", isStateChange: true)
 			}
 			
 			if (device.currentValue("connectionState") != 'disconnected') {
-				sendEvent (name: "connectionState", value: "disconnected", isStateChange: true)
+				sendEvent (name: "connectionState", descriptionText: "connection state", value: "disconnected", isStateChange: true)
 			}
 			
 		} else if (debugEnabled) {
