@@ -4,7 +4,7 @@ import groovy.transform.Field
  * Powerley Thermostat
  * SKU: PWLY-7828-A1
  * ZWave Plus
- * v1.0
+ * v1.1
  * 
  * Since there is no Hubitat-provided example thermostat driver to base anything off of
  * and their documentation is sorely lacking, we turn to community-developed drivers as
@@ -36,6 +36,8 @@ import groovy.transform.Field
  * ---
  * 
  */
+//11/26/2022 - Updated supportedThermostatFanModes and supportedThermostatModes to be proper JSON strings
+//             according to: https://community.hubitat.com/t/thermostat-scheduler-unexpected-error-lexing-failed-on-line-1/104314
 
 metadata {
 	definition (
@@ -149,8 +151,8 @@ metadata {
 //
 //this thermostat is super simple - it only supports the following modes & fan modes
 //
-@Field static List<String> supportedThermostatFanModes=["on", "auto"]
-@Field static List<String> supportedThermostatModes=["off", "heat", "cool"]
+@Field static String supportedThermostatFanModes=new groovy.json.JsonOutput().toJson(["on", "auto"])
+@Field static String supportedThermostatModes=new groovy.json.JsonOutput().toJson(["off", "heat", "cool"])
 
 //
 //nice idea from Bryan to combine config commands & preferences, then collect them all up into a map, makes things much easier later on.
@@ -218,17 +220,17 @@ metadata {
 					description: "Difference (+/-) from setpoint before HVAC kicks on",
 					defaultValue: 1,
 					options: [
-						 0: "+/- 0.0°",
-						 1: "+/- 1.0°",
-						 2: "+/- 2.0°",
-						 3: "+/- 3.0°",
-						 4: "+/- 4.0°",
-						 5: "+/- 5.0°",
-						 6: "+/- 6.0°",
-						 7: "+/- 7.0°",
-						 8: "+/- 8.0°",
-						 9: "+/- 9.0°",
-						10: "+/- 10.0°"
+						 0: "+/- 0.0ï¿½",
+						 1: "+/- 1.0ï¿½",
+						 2: "+/- 2.0ï¿½",
+						 3: "+/- 3.0ï¿½",
+						 4: "+/- 4.0ï¿½",
+						 5: "+/- 5.0ï¿½",
+						 6: "+/- 6.0ï¿½",
+						 7: "+/- 7.0ï¿½",
+						 8: "+/- 8.0ï¿½",
+						 9: "+/- 9.0ï¿½",
+						10: "+/- 10.0ï¿½"
 					]
 				],
 				parameterSize:1
@@ -241,17 +243,17 @@ metadata {
 					description: "Offset",
 					defaultValue: 0,
 					options: [
-						(-5): "-5.0°",
-						(-4): "-4.0°",
-						(-3): "-3.0°",
-						(-2): "-2.0°",
-						(-1): "-1.0°",
-						  0 : "0.0°",
-						  1 : "+1.0°",
-						  2 : "+2.0°",
-						  3 : "+3.0°",
-						  4 : "+4.0°",
-						  5 : "+5.0°"
+						(-5): "-5.0ï¿½",
+						(-4): "-4.0ï¿½",
+						(-3): "-3.0ï¿½",
+						(-2): "-2.0ï¿½",
+						(-1): "-1.0ï¿½",
+						  0 : "0.0ï¿½",
+						  1 : "+1.0ï¿½",
+						  2 : "+2.0ï¿½",
+						  3 : "+3.0ï¿½",
+						  4 : "+4.0ï¿½",
+						  5 : "+5.0ï¿½"
 					]
 				],
 				parameterSize:1
@@ -264,17 +266,17 @@ metadata {
 					description: "Difference between ambient tempurature and setpoint before 2nd stage or auxiliary heating/cooling kicks on",
 					defaultValue: 3,
 					options: [
-						 0: "+/- 0.0°",
-						 1: "+/- 1.0°",
-						 2: "+/- 2.0°",
-						 3: "+/- 3.0°",
-						 4: "+/- 4.0°",
-						 5: "+/- 5.0°",
-						 6: "+/- 6.0°",
-						 7: "+/- 7.0°",
-						 8: "+/- 8.0°",
-						 9: "+/- 9.0°",
-						10: "+/- 10.0°"
+						 0: "+/- 0.0ï¿½",
+						 1: "+/- 1.0ï¿½",
+						 2: "+/- 2.0ï¿½",
+						 3: "+/- 3.0ï¿½",
+						 4: "+/- 4.0ï¿½",
+						 5: "+/- 5.0ï¿½",
+						 6: "+/- 6.0ï¿½",
+						 7: "+/- 7.0ï¿½",
+						 8: "+/- 8.0ï¿½",
+						 9: "+/- 9.0ï¿½",
+						10: "+/- 10.0ï¿½"
 					]
 				],
 				parameterSize:1
@@ -554,7 +556,7 @@ void zwaveEvent(hubitat.zwave.commands.sensormultilevelv5.SensorMultilevelReport
 			eventProcess(name: "temperature", value: cmd.scaledSensorValue, unit: cmd.scale == 0 ? "C" : "F")
 		} else if (cmd.sensorType.toInteger() == 5) {
 			if (debugEnable) log.debug "got humidity: ${cmd.scaledSensorValue} (scale ${cmd.scale})"
-			eventProcess(name: "humidity", value: Math.round(cmd.scaledSensorValue), unit: cmd.scale == 0 ? "%": "g/m³")
+			eventProcess(name: "humidity", value: Math.round(cmd.scaledSensorValue), unit: cmd.scale == 0 ? "%": "g/mï¿½")
 		}
 	} finally {
 		if (traceEnable) log.trace "trace exit: zwaveEvent(hubitat.zwave.commands.sensormultilevelv5.SensorMultilevelReport)"
@@ -846,13 +848,11 @@ void initializeVars() {
 	if (traceEnable) log.trace "trace entry: initializeVars()"
 	try {
 		// first run only
-		String tStatModes = supportedThermostatModes.toString().replaceAll(/"/,"")
-		String tStatFanModes = supportedThermostatFanModes.toString().replaceAll(/"/,"")
 		if (traceEnable) {
-			log.trace "sending events for supportedThermostatModes [${tStatModes}] and supportedThermostatFanModes [${tStatFanModes}]..."
+			log.trace "sending events for supportedThermostatModes [${supportedThermostatModes}] and supportedThermostatFanModes [${supportedThermostatFanModes}]..."
 		}
-		sendEvent(name:"supportedThermostatModes", value: tStatModes, isStateChange:true)
-		sendEvent(name:"supportedThermostatFanModes", value: tStatFanModes, isStateChange:true)
+		sendEvent(name:"supportedThermostatModes", value: supportedThermostatModes, isStateChange:true)
+		sendEvent(name:"supportedThermostatFanModes", value: supportedThermostatFanModes, isStateChange:true)
 		if (traceEnable) log.trace "setting state initialized to true..."
 		state.initialized=true
 		if (traceEnable) log.trace "setting refresh() to be called in 15 seconds..."
