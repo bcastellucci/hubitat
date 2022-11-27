@@ -220,17 +220,17 @@ metadata {
 					description: "Difference (+/-) from setpoint before HVAC kicks on",
 					defaultValue: 1,
 					options: [
-						 0: "+/- 0.0�",
-						 1: "+/- 1.0�",
-						 2: "+/- 2.0�",
-						 3: "+/- 3.0�",
-						 4: "+/- 4.0�",
-						 5: "+/- 5.0�",
-						 6: "+/- 6.0�",
-						 7: "+/- 7.0�",
-						 8: "+/- 8.0�",
-						 9: "+/- 9.0�",
-						10: "+/- 10.0�"
+						 0: "+/- 0.0°",
+						 1: "+/- 1.0°",
+						 2: "+/- 2.0°",
+						 3: "+/- 3.0°",
+						 4: "+/- 4.0°",
+						 5: "+/- 5.0°",
+						 6: "+/- 6.0°",
+						 7: "+/- 7.0°",
+						 8: "+/- 8.0°",
+						 9: "+/- 9.0°",
+						10: "+/- 10.0°"
 					]
 				],
 				parameterSize:1
@@ -243,17 +243,17 @@ metadata {
 					description: "Offset",
 					defaultValue: 0,
 					options: [
-						(-5): "-5.0�",
-						(-4): "-4.0�",
-						(-3): "-3.0�",
-						(-2): "-2.0�",
-						(-1): "-1.0�",
-						  0 : "0.0�",
-						  1 : "+1.0�",
-						  2 : "+2.0�",
-						  3 : "+3.0�",
-						  4 : "+4.0�",
-						  5 : "+5.0�"
+						(-5): "-5.0°",
+						(-4): "-4.0°",
+						(-3): "-3.0°",
+						(-2): "-2.0°",
+						(-1): "-1.0°",
+						  0 : "0.0°",
+						  1 : "+1.0°",
+						  2 : "+2.0°",
+						  3 : "+3.0°",
+						  4 : "+4.0°",
+						  5 : "+5.0°"
 					]
 				],
 				parameterSize:1
@@ -266,17 +266,17 @@ metadata {
 					description: "Difference between ambient tempurature and setpoint before 2nd stage or auxiliary heating/cooling kicks on",
 					defaultValue: 3,
 					options: [
-						 0: "+/- 0.0�",
-						 1: "+/- 1.0�",
-						 2: "+/- 2.0�",
-						 3: "+/- 3.0�",
-						 4: "+/- 4.0�",
-						 5: "+/- 5.0�",
-						 6: "+/- 6.0�",
-						 7: "+/- 7.0�",
-						 8: "+/- 8.0�",
-						 9: "+/- 9.0�",
-						10: "+/- 10.0�"
+						 0: "+/- 0.0°",
+						 1: "+/- 1.0°",
+						 2: "+/- 2.0°",
+						 3: "+/- 3.0°",
+						 4: "+/- 4.0°",
+						 5: "+/- 5.0°",
+						 6: "+/- 6.0°",
+						 7: "+/- 7.0°",
+						 8: "+/- 8.0°",
+						 9: "+/- 9.0°",
+						10: "+/- 10.0°"
 					]
 				],
 				parameterSize:1
@@ -556,7 +556,7 @@ void zwaveEvent(hubitat.zwave.commands.sensormultilevelv5.SensorMultilevelReport
 			eventProcess(name: "temperature", value: cmd.scaledSensorValue, unit: cmd.scale == 0 ? "C" : "F")
 		} else if (cmd.sensorType.toInteger() == 5) {
 			if (debugEnable) log.debug "got humidity: ${cmd.scaledSensorValue} (scale ${cmd.scale})"
-			eventProcess(name: "humidity", value: Math.round(cmd.scaledSensorValue), unit: cmd.scale == 0 ? "%": "g/m�")
+			eventProcess(name: "humidity", value: Math.round(cmd.scaledSensorValue), unit: cmd.scale == 0 ? "%": "g/m³")
 		}
 	} finally {
 		if (traceEnable) log.trace "trace exit: zwaveEvent(hubitat.zwave.commands.sensormultilevelv5.SensorMultilevelReport)"
